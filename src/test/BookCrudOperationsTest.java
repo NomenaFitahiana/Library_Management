@@ -6,11 +6,8 @@ import entity.Topic;
 
 import static org.junit.jupiter.api.Assertions.*;
 import  org.junit.jupiter.api.Assertions;
-
-
 import java.time.LocalDate;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 public class BookCrudOperationsTest {
@@ -32,7 +29,7 @@ public class BookCrudOperationsTest {
     }
 
     @Test
-    void find_one_by_id(){
+    void find_one_by_id_ok(){
         Book expectedBook = new Book();
         expectedBook.setId(13);
         expectedBook.setBookName("Dracula");

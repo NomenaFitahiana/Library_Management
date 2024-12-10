@@ -19,6 +19,10 @@ public class BookCrudOperations implements CrudOperationInterface<Book, Integer>
         int offset = (page - 1) * size;
         query = "select * from books limit ? offset ?;";
 
+        if(page < 1){
+            throw new IllegalArgumentException("Page is not valid, it must be greater than 0, actually it's" + page);
+        }
+
        try (Connection connection = dbConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setInt(1, page);
