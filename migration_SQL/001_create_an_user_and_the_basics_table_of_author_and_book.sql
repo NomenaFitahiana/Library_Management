@@ -1,8 +1,10 @@
--- CREATE AN USER WITH ROLE
+-- CREATE AN USER 
 
 create user "nomena" with password 'library';
 
-grant all privileges on database librarymanagement to nomena;
+-- GIVE SOME PRIVILEGES TO OUR USER TO DO CRUD OPERATION
+grant select on all tables in schema public to "nomena";
+grant insert, update, delet on all table in schema public to "nomena";
 
 -- CREATE THE TABLE AUTHOR
 create table author(
