@@ -18,7 +18,7 @@ create table books (
     id serial primary key,
     bookName varchar(50) not null,
     pageNumbers int not null,
-    topic varchar(50) chekc (topic in "ROMANCE", "COMEDY", "OTHER")not null,
-    releaseDate date,not null
+    topic varchar(50) check (topic in ('ROMANCE', 'COMEDY', 'OTHER'))not null,
+    releaseDate date not null,
     authorId varchar(50) references author ("id")
 );
