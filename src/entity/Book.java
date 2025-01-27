@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 import java.sql.Date;
 
@@ -8,9 +8,9 @@ public class Book {
     private int pageNumber;
     private Topic topic;
     private Date releaseDate;
-    private Author author;
+    private String author;
 
-    public Book(int id, String bookName, int pageNumber, Topic topic, Date releaseDate, Author author) {
+    public Book(int id, String bookName, int pageNumber, Topic topic, Date releaseDate, String author) {
         this.id = id;
         this.bookName = bookName;
         this.pageNumber = pageNumber;
@@ -59,11 +59,21 @@ public class Book {
         this.releaseDate = releaseDate;
     };
 
-    public Author getAuthor() {
+    public String getAuthor() {
         return this.author;
     };
 
-    public void setAuthor(Author author) {
+    public void setAuthor(String author) {
         this.author = author;
     };
+
+    @Override
+    public String toString() {
+        return "Book { id = " + id +
+                        "bookName = " + bookName +
+                        "pageNumber = " + pageNumber +
+                        "topic = " + topic +
+                        "releaseDate = " + releaseDate +
+                        "author = " + author ;
+    }
 }

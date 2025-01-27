@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  title: Library Management API
+  description: |-
+    API for managing a library. This includes managing books and authors with relevant operations and filters.
+  version: 1.1.0
+servers:
+  - url: https://virtserver.swaggerhub.com/HEINOMENA3/LibraryAPI/1.1.0
+paths:
+  /books:
+    get:
+      tags:
+        - books
+      summary: Retrieve a list of all books in the library with optional filters.
+      operationId: getBooks
+      parameters:
+        - name: bookName
+          in: query
+          required: false
+          description: Filter books by name.
+          schema:
+            type: string
+        - name: releaseDateStart
+          in: query
+          required: false
+          description: Start date for release date filter.
+          schema:
+            type: string
+            format: date
+        - name: releaseDateEnd
+          in: query
+          required: false
+          description: End date for release date filter.
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          required: false
+          description: The page's number (default by 1)
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          required: false
+          description: The number of items per page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully retrieved a list of books.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+    post:
+      tags:
+        - books
+      summary: Add a new book to the library's collection.
+      operationId: createBook
+      requestBody:
+        description: Details of the book to be added.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrupdateBook"
+      responses:
+        201:
+          description: Successfully added the book.
+        400:
+          description: Invalid request.
+    put:
+      tags:
+        - books
+      summary: Idempotently update the details of an existing 
+      book.
+      operationId: crupdateBook
+      requestBody:
+        description: The updated details of the book.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+                items:
+                  $ref: "#/components/schemas/CrupdateBook"
+      responses:
+        200:
+          description: List of created or updated books
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "400":
+          description: Invalid request.
+  /books/{id}:
+    delete:
+      tags:
+        - books
+      summary: Remove a book from the library by its ID.
+      oprationId: deleteBook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the book to be deleted.
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Successfully deleted the book.
+        404:
+          description: Book not found.
+  /books/{bookId}/authors/{authorId}:
+    put:
+      tags:
+        - books
+      summary: Allow to update a book's author by their ID.
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: the book's Id.
+          schema:
+            type: integer
+        - name: authorId
+          in: path
+          required: true
+          description: the author's Id.
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Author updated.
+        "404":
+          description: Book or author not found.
+  /books/authors:
+    put:
+      tags:
+        - books
+      summary: Update some book's authors.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UpdateBookAuthor"
+      responses:
+        "204":
+          description: Author updated.
+        "400":
+          description: Invalid request.
+        "404":
+          description: Books or authors not found.
+  /authors:
+    get:
+      tags:
+        - authors
+      summary: Retrieve a list of authors with optional filters.
+      operationId: getAuthors
+      parameters:
+        - name: name
+          in: query
+          required: false
+          description: Filter authors by name.
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: The page's number (default by 1)
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          required: false
+          description: The number of items per page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of authord filtered by their name
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+    post:
+      tags:
+        - authors
+      summary: Add a new author.
+      operarionId: createAuthor
+      requestBody:
+        description: Details of the author to be added.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAuthor"
+      responses:
+        201:
+          description: Successfully added the author.
+        400:
+          description: Invalid request.
+    put:
+      tags:
+        - authors
+      summary: Idempotently update an existing author's details.
+      oprationId: crupdateAuthor
+      requestBody:
+        description: The updated details of the author.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreateAuthor"
+      responses:
+        200:
+          description: Successfully updated the author.
+        400:
+          description: Invalid request.
+  /authors/{id}:
+    delete:
+      tags:
+        - authors
+      summary: Remove an author by their ID.
+      operationId: deleteAuthor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the author to be deleted.
+          schema:
+            type: string
+      responses:
+        204:
+          description: Successfully deleted the author.
+        404:
+          description: Author not found.
+
+components:
+  schemas:
+    CrupdateBook:
+      required:
+        - bookName
+        - pageNumbers
+        - topic
+        - releaseDate
+      properties:
+        id:
+          type: integer
+        bookName:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
+        releaseDate:
+          type: string
+          format: date
+    Book:
+      allOf:
+        - $ref: "#/components/schemas/CrupdateBook"
+        - properties:
+            author:
+              type: object
+              nullable: true
+    CreateAuthor:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+            - M
+            - F
+    Author:
+      allOf:
+        - $ref: "#/components/schemas/CreateAuthor"
+    UpdateBookAuthor:
+      type: object
+      properties:
+        bookId:
+          type: integer
+          description: The book's Id.
+        authorId:
+          type: string
+          description: The author's Id which is related to the book.
+      required:
+        - bookId
+        - authorId
