@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Book {
     private int id;
@@ -76,4 +77,20 @@ public class Book {
                         "releaseDate = " + releaseDate +
                         "author = " + author ;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return Objects.equals(id, book.id) && Objects.equals(bookName, book.bookName) && Objects.equals(pageNumber, book.pageNumber) && Objects.equals(topic, book.topic) && Objects.equals(releaseDate, book.releaseDate) && Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, bookName, pageNumber, topic, releaseDate, author);
+    }
+
 }
