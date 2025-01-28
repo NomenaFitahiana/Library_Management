@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Author {
     private String id;
     private String name;
@@ -34,4 +36,27 @@ public class Author {
     public void setSex(char sex) {
         this.sex = sex;
     }
+
+    @Override
+    public String toString(){
+        return "Author{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                '}';
+    }
+
+    @Override
+     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(sex, author.sex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, sex);
+    }
+
 }
