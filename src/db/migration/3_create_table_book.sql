@@ -10,9 +10,9 @@ $$
 
 create table if not exists books (
     id serial primary key,
-    bookName varchar(50) not null,
-    pageNumbers int not null,
-    topic varchar(50) check (topic in ('ROMANCE', 'COMEDY', 'OTHER'))not null,
-    releaseDate date not null,
-    authorId varchar(50) references author ("id")
+    book_name varchar(50) not null,
+    page_numbers int not null,
+    topic topic,
+    release_date date not null,
+    author_id varchar(50) references author ("id")
 );

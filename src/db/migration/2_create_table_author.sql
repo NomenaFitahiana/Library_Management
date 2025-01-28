@@ -10,7 +10,7 @@ $$
 create table if not exists author(
     id varchar(50) primary key,
     name varchar(150)not null,
-    sex char(1) check (sex in ('M', 'F'))
+    sex sex
 );
 
    
