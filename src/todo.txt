@@ -1,3 +1,0 @@
-- mijery fanaovana migration sql
-- mijery fomba fi-gérer-na ilay rôle an'ilay user
-- 
