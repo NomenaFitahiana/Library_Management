@@ -73,11 +73,11 @@ public class Book {
     @Override
     public String toString() {
         return "Book { id = " + id +
-                        "bookName = " + bookName +
-                        "pageNumber = " + pageNumber +
-                        "topic = " + topic +
-                        "releaseDate = " + releaseDate +
-                        "author = " + author ;
+                        ", bookName = " + bookName +
+                        ", pageNumber = " + pageNumber +
+                        ", topic = " + topic +
+                        ", releaseDate = " + releaseDate +
+                        ", author = " + author + "}";
     }
 
     @Override

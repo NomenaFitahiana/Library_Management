@@ -9,15 +9,15 @@ import entity.Topic;
 
 
 
-public class BookDao implements CrudOperationInterface<Book>{
+public class BookDao implements CrudOperationInterface<Book, Integer>{
     private final DbConnection dbConnection = new DbConnection();
     private String query;
 
     @Override
     public List<Book> getAll(){
         List<Book> books = new ArrayList<>();
-
         query = "select * from books;";
+
        try (Connection connection = dbConnection.getConnection();
             Statement statement = connection.createStatement()){
            ResultSet result = statement.executeQuery(query);
@@ -41,5 +41,32 @@ public class BookDao implements CrudOperationInterface<Book>{
        }
     }
 
-    
+    @Override
+    public Book findById (Integer id){
+        Book book = new Book();
+        query = "select * from books where id = ?;";
+
+         try (Connection connection = dbConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query) ){
+                statement.setInt(1, id);
+
+                ResultSet result = statement.executeQuery();
+
+                if (result.next()) {
+                    book.setId(result.getInt("id"));
+                    book.setBookName(result.getString("bookname"));
+                    book.setPageNumber(result.getInt("pagenumbers"));
+                    Topic topic = Topic.valueOf(result.getString("topic"));
+                    book.setTopic(topic);
+                    book.setReleaseDate(result.getDate("releasedate"));
+                    book.setAuthor(result.getString("authorid"));
+                }else {
+                    System.out.println("Book not found !");
+                }
+
+                return book;
+         } catch(SQLException e){
+            throw new RuntimeException(e);
+         }
+    }
 }
