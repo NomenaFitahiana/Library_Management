@@ -69,4 +69,30 @@ public class BookDao implements CrudOperationInterface<Book, Integer>{
             throw new RuntimeException(e);
          }
     }
+
+    @Override
+    public void deleteById(Integer id){
+        query = "delete from books where id = ?;";
+
+        if (id == null) {
+            System.out.println("Id couldn' be null");
+            return;
+        }
+
+       
+            try (Connection connection = dbConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)){
+                statement.setInt(1, id);
+                int result = statement.executeUpdate();
+
+                if (result > 0) {
+                    System.out.println("Book deleted !");
+                }else System.out.println("Failed to delete the book with id: " + id);
+
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        
+      
+    }
 }

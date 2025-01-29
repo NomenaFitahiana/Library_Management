@@ -7,4 +7,6 @@ public interface CrudOperationInterface <T, E>{
 
     T findById( E id);
 
+    void deleteById(E id);
+
 }
