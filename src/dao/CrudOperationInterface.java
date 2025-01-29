@@ -3,7 +3,7 @@ package dao;
 import java.util.List;
 
 public interface CrudOperationInterface <T>{
-    void getAll();
+    List<T> getAll();
 
   //  T findById( E id);
 
