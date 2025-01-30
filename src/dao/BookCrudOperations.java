@@ -9,18 +9,19 @@ import entity.Topic;
 
 
 
-public class BookDao implements CrudOperationInterface<Book, Integer>{
+public class BookCrudOperations implements CrudOperationInterface<Book, Integer>{
     private final DbConnection dbConnection = new DbConnection();
     private String query;
 
     @Override
-    public List<Book> getAll(){
+    public List<Book> getAll(int size){
         List<Book> books = new ArrayList<>();
-        query = "select * from books;";
+        query = "select * from books limit ?;";
 
        try (Connection connection = dbConnection.getConnection();
-            Statement statement = connection.createStatement()){
-           ResultSet result = statement.executeQuery(query);
+            PreparedStatement statement = connection.prepareStatement(query)){
+                statement.setInt(1, size);
+                ResultSet result = statement.executeQuery();
 
            while (result.next()) {
                 Book book = new Book();
