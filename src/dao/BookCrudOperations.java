@@ -14,13 +14,15 @@ public class BookCrudOperations implements CrudOperationInterface<Book, Integer>
     private String query;
 
     @Override
-    public List<Book> getAll(int size){
+    public List<Book> getAll(int page, int size){
         List<Book> books = new ArrayList<>();
-        query = "select * from books limit ?;";
+        int offset = (page - 1) * size;
+        query = "select * from books limit ? offset ?;";
 
        try (Connection connection = dbConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query)){
-                statement.setInt(1, size);
+                statement.setInt(1, page);
+                statement.setInt(2, size);
                 ResultSet result = statement.executeQuery();
 
            while (result.next()) {

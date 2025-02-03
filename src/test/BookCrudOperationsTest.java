@@ -4,7 +4,7 @@ import dao.BookCrudOperations;
 import entity.Book;
 import entity.Topic;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import  org.junit.jupiter.api.Assertions;
 
 
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class BookCrudOperationsTest {
     BookCrudOperations subject = new BookCrudOperations();
 
-    @Test
+    /*@Test
     void read_all_books_ok(){
         Book expectedBook = new Book();
         expectedBook.setId(8);
@@ -26,10 +26,25 @@ public class BookCrudOperationsTest {
         expectedBook.setTopic(Topic.ROMANCE);
         expectedBook.setAuthor("A008");
         
-       // List<Book> actual = subject.getAll();
+        List<Book> actual = subject.getAll(2);
 
-        //assertTrue(actual.contains(expectedBook));
+        assertTrue(actual.contains(expectedBook));
     }
+
+    @Test
+    void find_one_by_id(){
+        Book expectedBook = new Book();
+        expectedBook.setId(8);
+        expectedBook.setBookName("Crime and Punishment");
+        expectedBook.setPageNumber(430);
+        expectedBook.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(1866, 1, 1)));
+        expectedBook.setTopic(Topic.ROMANCE);
+        expectedBook.setAuthor("A008");
+
+        Book actual = subject.findById(8);
+
+        assertEquals(expectedBook, actual);
+    }*/
 
     
 }

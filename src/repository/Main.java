@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
         BookCrudOperations book = new BookCrudOperations();
     
-     System.out.println(book.getAll(4));
+     System.out.println(book.getAll( 2,4));
 
      //System.out.println(book.findById(1));
 
