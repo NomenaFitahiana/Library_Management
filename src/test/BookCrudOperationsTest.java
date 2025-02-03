@@ -4,7 +4,9 @@ import dao.BookCrudOperations;
 import entity.Book;
 import entity.Topic;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import  org.junit.jupiter.api.Assertions;
+
 
 import java.time.LocalDate;
 import java.util.List;
