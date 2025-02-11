@@ -43,6 +43,11 @@ public class BookCrudOperationsTest {
         assertEquals(expectedBook, actual);
     }
 
+    @Test
+    void filter_by_bookname_or_releasedate_between_intervals(){
+        
+    }
+
     
 }
 
