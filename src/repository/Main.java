@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.BookCrudOperations;
 import entity.Criteria;
+import entity.Order;
 
 
 public class Main {
@@ -23,9 +24,11 @@ public class Main {
     table.add(criteria);
     table.add(cr);
 
+    Order or = new Order("bookname", "asc");
+
     //System.out.println(table);
 
-    System.out.println(book.filterByCriteria(table));
+    System.out.println(book.filterByCriteria(table, or));
        
     }
 }

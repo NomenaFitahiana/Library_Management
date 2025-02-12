@@ -6,6 +6,7 @@ import java.util.List;
 import db.DbConnection;
 import entity.Book;
 import entity.Criteria;
+import entity.Order;
 import entity.Topic;
 
 
@@ -105,7 +106,7 @@ public class BookCrudOperations implements CrudOperationInterface<Book, Integer>
     }
 
     @Override
-    public List<Book> filterByCriteria(List<Criteria> criteria) {
+    public List<Book> filterByCriteria(List<Criteria> criteria, Order order) {
          StringBuilder sql = new StringBuilder("select * from books where 1 = 1 ");
          List<StringBuilder> sqlCondition = new ArrayList<>();
          List<StringBuilder> sqlConditionFilter = new ArrayList<>();
@@ -134,10 +135,14 @@ public class BookCrudOperations implements CrudOperationInterface<Book, Integer>
         if (sqlConditionFilter.isEmpty()) {
             sql.append("");
         }else if (sqlConditionFilter.size() == 1) {
-            sql.append( "and ").append(sqlConditionFilter.get(0)).append(";");
+            sql.append( "and ").append(sqlConditionFilter.get(0));
         } else if (sqlConditionFilter.size() == 2) {
-            sql.append(" and ").append(sqlConditionFilter.get(0)).append(" or ").append(sqlConditionFilter.get(1)).append(";");
+            sql.append(" and ").append(sqlConditionFilter.get(0)).append(" or ").append(sqlConditionFilter.get(1));
         }
+
+        if (order.getColumn() != null) {
+            sql.append(" order by ").append(order.getColumn()).append(" ").append(order.getOrder());
+        } else sql.append("");
         
         try (Connection connection = dbConnection.getConnection();
             Statement statement = connection.createStatement()){
@@ -161,8 +166,7 @@ public class BookCrudOperations implements CrudOperationInterface<Book, Integer>
    }catch (SQLException e){
     throw new RuntimeException(e);
    }
-        
-        
+       
         
     }
 }
