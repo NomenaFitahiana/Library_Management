@@ -17,4 +17,12 @@ public class Criteria {
     return this.value;
    }
 
+   @Override
+    public String toString() {
+        return "Criteria { column = " + column +
+                        ", value = " + value +
+                      "}";
+    }
+
+
 }
